@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle, Users, Activity, Shield, Clock, Heart, Droplets, BarChart3, Bell, UserCheck, Send } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const LandingPage = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +15,17 @@ const LandingPage = () => {
     message: ''
   });
 
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.querySelector(location.hash);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
@@ -50,22 +64,30 @@ const LandingPage = () => {
                 Conexão através do sangue. A plataforma completa que conecta hemocentros e doadores 
                 para salvar mais vidas através da gestão eficiente de estoque.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                <motion.button
+                            <div className="flex flex-col sm:flex-row gap-4 mt-8 items-center sm:justify-start">
+                <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-700 transition-colors flex items-center justify-center group"
                 >
-                  Começar Agora
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </motion.button>
-                <motion.button
+                  <Link
+                    to="/register"
+                    className="bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-700 transition-colors flex items-center justify-center group"
+                  >
+                    Começar Agora
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </motion.div>
+                <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="border-2 border-primary-600 text-primary-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-50 transition-colors"
                 >
-                  Ver Demonstração
-                </motion.button>
+                  <Link
+                    to="/demonstracao"
+                    className="border-2 border-primary-600 text-primary-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-50 transition-colors flex items-center justify-center"
+                  >
+                    Ver Demonstração
+                  </Link>
+                </motion.div>
               </div>
             </motion.div>
             

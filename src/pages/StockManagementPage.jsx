@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/LocalAuthContext';
 import { useNotification } from '../context/NotificationContext';
 
+
 const StockManagementPage = () => {
   const { userProfile, stockLevels, updateStockLevel, getStockStatistics } = useAuth();
   const { addNotification } = useNotification();

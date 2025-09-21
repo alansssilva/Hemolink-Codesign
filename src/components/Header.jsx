@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Droplets, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -11,7 +11,8 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
+          <Link to="/" className="flex items-center space-x-2 group"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <div className="relative">
               <Droplets className="h-8 w-8 text-primary-600 group-hover:text-primary-700 transition-colors" />
               <Heart className="h-4 w-4 text-primary-500 absolute -bottom-1 -right-1 group-hover:text-primary-600 transition-colors" />
@@ -22,28 +23,37 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link to="#como-funciona" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
-              Como Funciona
-            </Link>
-            <Link to="#beneficios" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
-              Benefícios
-            </Link>
-            <Link to="#contato" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
-              Contato
-            </Link>
-            <Link 
-              to="/login/type" 
-              className="text-primary-600 hover:text-primary-700 transition-colors font-medium"
-            >
-              Login
-            </Link>
-            <Link 
-              to="/register" 
-              className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors font-medium"
-            >
-              Cadastrar
-            </Link>
-          </nav>
+  <Link
+    to={{ pathname: "/", hash: "#como-funciona" }}
+    className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
+  >
+    Como Funciona
+  </Link>
+  <Link
+    to={{ pathname: "/", hash: "#beneficios" }}
+    className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
+  >
+    Benefícios
+  </Link>
+  <Link
+    to={{ pathname: "/", hash: "#contato" }}
+    className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
+  >
+    Contato
+  </Link>
+  <Link 
+    to="/login/type" 
+    className="text-primary-600 hover:text-primary-700 transition-colors font-medium"
+  >
+    Login
+  </Link>
+  <Link 
+    to="/register" 
+    className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors font-medium"
+  >
+    Cadastrar
+  </Link>
+</nav>
 
           {/* Mobile menu button */}
           <button
@@ -64,27 +74,27 @@ const Header = () => {
               className="md:hidden border-t border-gray-100 py-4"
             >
               <nav className="flex flex-col space-y-4">
-                <Link 
-                  to="#como-funciona" 
+                <a 
+                  href="#como-funciona" 
                   className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Como Funciona
-                </Link>
-                <Link 
-                  to="#beneficios" 
+                </a>
+                <a 
+                  href="#beneficios" 
                   className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Benefícios
-                </Link>
-                <Link 
-                  to="#contato" 
+                </a>
+                <a 
+                  href="#contato" 
                   className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Contato
-                </Link>
+                </a>
                 <Link 
                   to="/login/type" 
                   className="text-primary-600 hover:text-primary-700 transition-colors font-medium"

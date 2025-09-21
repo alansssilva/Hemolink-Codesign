@@ -292,9 +292,9 @@ const RegisterPage = () => {
 
           {/* Login Link */}
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p className="text-center text-gray-600 mt-6">
               Já tem uma conta?{' '}
-              <Link to="/login" className="text-primary-600 hover:text-primary-700 font-medium transition-colors">
+              <Link to="/login/type" className="text-primary-600 hover:text-primary-700 font-medium transition-colors">
                 Faça login aqui
               </Link>
             </p>

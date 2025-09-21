@@ -1,8 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Droplets, Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram } from 'lucide-react';
+import { X } from 'lucide-react';
+
+const termsText = `
+**Termos de Uso**
+
+Bem-vindo ao Hemolink! Ao utilizar nossa plataforma, você concorda com os seguintes termos:
+- O Hemolink destina-se exclusivamente à gestão de doações de sangue e comunicação entre hemocentros e doadores.
+- É proibido o uso da plataforma para fins ilícitos ou que violem leis vigentes.
+- Os dados fornecidos devem ser verdadeiros e atualizados.
+- Reservamo-nos o direito de suspender contas que violem estes termos.
+- O uso contínuo da plataforma implica aceitação integral destes termos.
+`;
+
+const privacyText = `
+**Política de Privacidade**
+
+O Hemolink valoriza sua privacidade. Ao utilizar nossos serviços:
+- Coletamos apenas dados necessários para cadastro, comunicação e gestão de doações.
+- Seus dados não serão compartilhados com terceiros sem consentimento, exceto quando exigido por lei.
+- Utilizamos medidas de segurança para proteger suas informações.
+- Você pode solicitar a exclusão ou alteração de seus dados a qualquer momento.
+- Ao continuar usando o Hemolink, você concorda com esta política.
+`;
 
 const Footer = () => {
+  const [modal, setModal] = useState(null);
+  const closeModal = () => setModal(null);
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -18,7 +43,7 @@ const Footer = () => {
               <span className="text-sm font-medium text-primary-400 bg-primary-900 px-2 py-1 rounded-full">SaaS</span>
             </div>
             <p className="text-gray-300 mb-4 max-w-md">
-              Conexão através do sangue. Gestão inteligente para salvar vidas. 
+              Conexão através do sangue. Gestão inteligente para salvar vidas.
               Plataforma completa para hemocentros e doadores.
             </p>
             <div className="flex space-x-4">
@@ -39,17 +64,17 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Links Rápidos</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="#como-funciona" className="text-gray-300 hover:text-white transition-colors">
+                <Link to={{ pathname: "/", hash: "#como-funciona" }} className="text-gray-300 hover:text-white transition-colors">
                   Como Funciona
                 </Link>
               </li>
               <li>
-                <Link to="#beneficios" className="text-gray-300 hover:text-white transition-colors">
+                <Link to={{ pathname: "/", hash: "#beneficios" }} className="text-gray-300 hover:text-white transition-colors">
                   Benefícios
                 </Link>
               </li>
               <li>
-                <Link to="/login" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/login/type" className="text-gray-300 hover:text-white transition-colors">
                   Login
                 </Link>
               </li>
@@ -67,15 +92,15 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-center space-x-2">
                 <Mail className="h-4 w-4 text-primary-400" />
-                <span className="text-gray-300">contato@hemolink.com</span>
+                <span className="text-gray-300">hemolink@gsuite.iff.edu.br</span>
               </li>
               <li className="flex items-center space-x-2">
                 <Phone className="h-4 w-4 text-primary-400" />
-                <span className="text-gray-300">(11) 9999-9999</span>
+                <span className="text-gray-300">(22) 9999-9999</span>
               </li>
               <li className="flex items-center space-x-2">
                 <MapPin className="h-4 w-4 text-primary-400" />
-                <span className="text-gray-300">São Paulo, SP</span>
+                <span className="text-gray-300">Campos do Goytacazes, RJ</span>
               </li>
             </ul>
           </div>
@@ -86,15 +111,42 @@ const Footer = () => {
             © 2025 Hemolink SaaS. Todos os direitos reservados.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link to="#" className="text-gray-400 hover:text-white text-sm transition-colors">
+            <button
+              onClick={() => setModal('terms')}
+              className="text-gray-400 hover:text-white text-sm transition-colors"
+              type="button"
+            >
               Termos de Uso
-            </Link>
-            <Link to="#" className="text-gray-400 hover:text-white text-sm transition-colors">
+            </button>
+            <button
+              onClick={() => setModal('privacy')}
+              className="text-gray-400 hover:text-white text-sm transition-colors"
+              type="button"
+            >
               Política de Privacidade
-            </Link>
+            </button>
           </div>
         </div>
       </div>
+      {modal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+          <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full max-h-[80vh] overflow-y-auto p-8 relative">
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 text-gray-400 hover:text-primary-600 transition-colors"
+              aria-label="Fechar"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              {modal === 'terms' ? 'Termos de Uso' : 'Política de Privacidade'}
+            </h2>
+            <div className="prose prose-gray max-w-none text-gray-700 whitespace-pre-line">
+              {modal === 'terms' ? termsText : privacyText}
+            </div>
+          </div>
+        </div>
+      )}
     </footer>
   );
 };

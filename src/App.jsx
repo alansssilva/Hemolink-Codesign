@@ -9,6 +9,7 @@ import DonorDashboard from './pages/DonorDashboard';
 import ProfessionalDashboard from './pages/ProfessionalDashboard';
 import StockManagementPage from './pages/StockManagementPage';
 import RegisterPage from './pages/RegisterPage';
+import DemonstrationPage from './pages/DemonstrationPage';
 
 // Loading Component
 const LoadingSpinner = () => (
@@ -100,6 +101,10 @@ function AppRoutes() {
               <RegisterPage />
             </PublicRoute>
           } 
+        />
+        <Route 
+          path="/demonstracao"
+          element={<DemonstrationPage />}
         />
         <Route 
           path="/donor/dashboard" 
