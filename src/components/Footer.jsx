@@ -2,7 +2,7 @@ import { Droplets, Facebook, Heart, Instagram, Mail, MapPin, Phone, Twitter, X }
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logoFaculdade from '../assets/logo-camposcentro-horizontal-branco.png';
-import logoHemolink from '../assets/Logo Branca.png';
+import logoHemolink from '../assets/Logo branca.png';
 
 const termsText = `
 **Termos de Uso**
