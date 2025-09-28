@@ -36,17 +36,12 @@ const Footer = () => {
           {/* Logo e Descrição */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="relative">
-                <Droplets className="h-8 w-8 text-primary-400" />
-                <Heart className="h-4 w-4 text-primary-300 absolute -bottom-1 -right-1" />
-              </div>
               <img
                 src={logoHemolink}
                 alt="Hemolink"
                 className="h-8 w-auto"
                 style={{ maxWidth: 160 }}
               />
-              <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded-full">SaaS</span>
             </div>
             <p className="text-gray-300 mb-4 max-w-md">
               Conexão através do sangue. Gestão inteligente para salvar vidas.
