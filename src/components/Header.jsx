@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Droplets, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import logoFaculdade from '../assets/logo-camposcentro-horizontal.png';
+import logoHemolink from '../assets/Assinatura Visual.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,48 +14,59 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <div className="relative">
               <Droplets className="h-8 w-8 text-primary-600 group-hover:text-primary-700 transition-colors" />
               <Heart className="h-4 w-4 text-primary-500 absolute -bottom-1 -right-1 group-hover:text-primary-600 transition-colors" />
             </div>
-            <span className="text-xl font-bold text-gray-900">Hemolink</span>
+            <img
+              src={logoHemolink}
+              alt="Hemolink"
+              className="h-8 w-auto"
+              style={{ maxWidth: 120 }}
+            />
             <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded-full">SaaS</span>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-  <Link
-    to={{ pathname: "/", hash: "#como-funciona" }}
-    className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
-  >
-    Como Funciona
-  </Link>
-  <Link
-    to={{ pathname: "/", hash: "#beneficios" }}
-    className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
-  >
-    Benefícios
-  </Link>
-  <Link
-    to={{ pathname: "/", hash: "#contato" }}
-    className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
-  >
-    Contato
-  </Link>
-  <Link 
-    to="/login/type" 
-    className="text-primary-600 hover:text-primary-700 transition-colors font-medium"
-  >
-    Login
-  </Link>
-  <Link 
-    to="/register" 
-    className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors font-medium"
-  >
-    Cadastrar
-  </Link>
-</nav>
+            <Link
+              to={{ pathname: "/", hash: "#como-funciona" }}
+              className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
+            >
+              Como Funciona
+            </Link>
+            <Link
+              to={{ pathname: "/", hash: "#beneficios" }}
+              className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
+            >
+              Benefícios
+            </Link>
+            <Link
+              to={{ pathname: "/", hash: "#contato" }}
+              className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
+            >
+              Contato
+            </Link>
+            <Link
+              to="/login/type"
+              className="text-primary-600 hover:text-primary-700 transition-colors font-medium"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors font-medium"
+            >
+              Cadastrar
+            </Link>
+            <img
+              src={logoFaculdade}
+              alt="Logo da Faculdade"
+              className="h-10 w-auto ml-6 hidden md:block"
+              style={{ maxWidth: 160 }}
+            />
+          </nav>
 
           {/* Mobile menu button */}
           <button
@@ -74,36 +87,36 @@ const Header = () => {
               className="md:hidden border-t border-gray-100 py-4"
             >
               <nav className="flex flex-col space-y-4">
-                <a 
-                  href="#como-funciona" 
+                <a
+                  href="#como-funciona"
                   className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Como Funciona
                 </a>
-                <a 
-                  href="#beneficios" 
+                <a
+                  href="#beneficios"
                   className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Benefícios
                 </a>
-                <a 
-                  href="#contato" 
+                <a
+                  href="#contato"
                   className="text-gray-600 hover:text-primary-600 transition-colors font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Contato
                 </a>
-                <Link 
-                  to="/login/type" 
+                <Link
+                  to="/login/type"
                   className="text-primary-600 hover:text-primary-700 transition-colors font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Login
                 </Link>
-                <Link 
-                  to="/register" 
+                <Link
+                  to="/register"
                   className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors font-medium text-center"
                   onClick={() => setIsMenuOpen(false)}
                 >

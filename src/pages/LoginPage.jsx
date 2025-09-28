@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, Droplets, Heart, ArrowLeft, User, Stethoscope } from 'lucide-react';
 import { useAuth } from '../context/LocalAuthContext';
 import { useNotification } from '../context/NotificationContext';
+import logoHemolink from '../assets/Logo vermelha.png';
+import gotasBg from '../assets/Padronagens-27.png'; // ajuste o caminho se necessário
 
 const LoginPage = () => {
   const { userType } = useParams();
@@ -13,7 +15,7 @@ const LoginPage = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const navigate = useNavigate();
   const { signIn } = useAuth();
   const { addNotification } = useNotification();
@@ -25,7 +27,6 @@ const LoginPage = () => {
     }
   }, [userType, navigate]);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -33,7 +34,7 @@ const LoginPage = () => {
     try {
       const result = await signIn(formData.email, formData.password);
       addNotification('Login realizado com sucesso!', 'success');
-      
+
       // Redirect based on user role from the result
       if (result.profile) {
         // Small delay to ensure state is updated
@@ -60,7 +61,15 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-medical-50 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 relative">
+      <div className="fixed inset-0 -z-10" style={{ opacity: 0.04 }}>
+        <img
+          src={gotasBg}
+          alt="Fundo de gotas"
+          className="w-full h-full object-cover"
+          draggable={false}
+        />
+      </div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -73,15 +82,20 @@ const LoginPage = () => {
             <ArrowLeft className="h-5 w-5 text-gray-600 group-hover:text-primary-600 transition-colors" />
             <span className="text-gray-600 group-hover:text-primary-600 transition-colors">Voltar à seleção</span>
           </Link>
-          
+
           <div className="flex items-center justify-center space-x-2 mb-4">
             <div className="relative">
               <Droplets className="h-8 w-8 text-primary-600" />
               <Heart className="h-4 w-4 text-primary-500 absolute -bottom-1 -right-1" />
             </div>
-            <span className="text-2xl font-bold text-gray-900">Hemolink</span>
+            <img
+              src={logoHemolink}
+              alt="Hemolink"
+              className="h-8 w-auto"
+              style={{ maxWidth: 180 }}
+            />
           </div>
-          
+
           <div className="flex items-center justify-center space-x-2 mb-4">
             {userType === 'donor' ? (
               <User className="h-6 w-6 text-primary-600" />
@@ -96,7 +110,7 @@ const LoginPage = () => {
         </div>
 
         {/* Login Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+        <div className="bg-white bg-opacity-80 rounded-2xl shadow-xl p-8 border border-gray-100">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
             <div>

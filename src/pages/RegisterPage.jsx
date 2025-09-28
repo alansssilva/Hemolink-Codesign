@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, User, MapPin, Droplets, Heart, ArrowLeft, Building } from 'lucide-react';
 import { useAuth } from '../context/LocalAuthContext';
 import { useNotification } from '../context/NotificationContext';
+import logoHemolink from '../assets/Logo vermelha.png';
+import gotasBg from '../assets/Padronagens-27.png';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -20,11 +22,11 @@ const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const navigate = useNavigate();
   const { signUp } = useAuth();
   const { addNotification } = useNotification();
-  
+
   const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 
   const handleSubmit = async (e) => {
@@ -66,7 +68,15 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-medical-50 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 relative bg-gradient-to-br from-primary-50 via-white to-medical-50">
+      <div className="fixed inset-0 -z-10" style={{ opacity: 0.04 }}>
+        <img
+          src={gotasBg}
+          alt="Fundo de gotas"
+          className="w-full h-full object-cover"
+          draggable={false}
+        />
+      </div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -84,7 +94,12 @@ const RegisterPage = () => {
               <Droplets className="h-8 w-8 text-primary-600" />
               <Heart className="h-4 w-4 text-primary-500 absolute -bottom-1 -right-1" />
             </div>
-            <span className="text-2xl font-bold text-gray-900">Hemolink</span>
+            <img
+              src={logoHemolink}
+              alt="Hemolink"
+              className="h-8 w-auto"
+              style={{ maxWidth: 180 }}
+            />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Criar Conta</h1>
           <p className="text-gray-600">Junte-se à nossa rede de doadores e hemocentros</p>
@@ -101,22 +116,20 @@ const RegisterPage = () => {
               <button
                 type="button"
                 onClick={() => setFormData({ ...formData, userType: 'donor' })}
-                className={`p-3 rounded-lg border-2 text-sm font-medium transition-colors ${
-                  formData.userType === 'donor'
-                    ? 'border-primary-600 bg-primary-50 text-primary-700'
-                    : 'border-gray-200 hover:border-gray-300 text-gray-600'
-                }`}
+                className={`p-3 rounded-lg border-2 text-sm font-medium transition-colors ${formData.userType === 'donor'
+                  ? 'border-primary-600 bg-primary-50 text-primary-700'
+                  : 'border-gray-200 hover:border-gray-300 text-gray-600'
+                  }`}
               >
                 Doador
               </button>
               <button
                 type="button"
                 onClick={() => setFormData({ ...formData, userType: 'professional' })}
-                className={`p-3 rounded-lg border-2 text-sm font-medium transition-colors ${
-                  formData.userType === 'professional'
-                    ? 'border-primary-600 bg-primary-50 text-primary-700'
-                    : 'border-gray-200 hover:border-gray-300 text-gray-600'
-                }`}
+                className={`p-3 rounded-lg border-2 text-sm font-medium transition-colors ${formData.userType === 'professional'
+                  ? 'border-primary-600 bg-primary-50 text-primary-700'
+                  : 'border-gray-200 hover:border-gray-300 text-gray-600'
+                  }`}
               >
                 Profissional
               </button>

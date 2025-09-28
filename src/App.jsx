@@ -75,7 +75,7 @@ const PublicRoute = ({ children }) => {
 
 function AppRoutes() {
   return (
-    <div className="min-h-screen bg-gray-50 font-inter">
+    <div className="min-h-screen bg-transparent font-inter">
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route 

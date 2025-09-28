@@ -1,12 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Droplets, Heart, User, Calendar, MapPin, Download, Share2, QrCode } from 'lucide-react';
+import logoHemolink from '../assets/Logo branca.png';
 
 const DonorCard = ({ userProfile, donations = [] }) => {
   const totalDonations = donations.length;
   const lastDonation = donations.length > 0 ? donations[0] : null;
   const bloodType = userProfile?.donor_profiles?.[0]?.blood_type || 'Não informado';
-  
+
   // Calcular nível de doador baseado no número de doações
   const getDonorLevel = (donations) => {
     if (donations >= 10) return { level: 'Ouro', color: 'text-yellow-600', bgColor: 'bg-yellow-100' };
@@ -23,46 +24,50 @@ const DonorCard = ({ userProfile, donations = [] }) => {
     const ctx = canvas.getContext('2d');
     canvas.width = 400;
     canvas.height = 250;
-    
+
     // Background
     ctx.fillStyle = '#f8fafc';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
+
     // Header
     ctx.fillStyle = '#dc2626';
     ctx.fillRect(0, 0, canvas.width, 60);
-    
-    // Logo area
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 16px Arial';
-    ctx.fillText('HEMOLINK', 20, 35);
-    
-    // User info
-    ctx.fillStyle = '#1f2937';
-    ctx.font = 'bold 18px Arial';
-    ctx.fillText(userProfile?.name || 'Nome do Doador', 20, 90);
-    
-    ctx.font = '14px Arial';
-    ctx.fillText(`Tipo Sanguíneo: ${bloodType}`, 20, 110);
-    ctx.fillText(`Total de Doações: ${totalDonations}`, 20, 130);
-    ctx.fillText(`Nível: ${donorLevel.level}`, 20, 150);
-    
-    if (lastDonation) {
-      ctx.fillText(`Última Doação: ${new Date(lastDonation.date).toLocaleDateString('pt-BR')}`, 20, 170);
-    }
-    
-    // QR Code placeholder
-    ctx.fillStyle = '#e5e7eb';
-    ctx.fillRect(300, 80, 80, 80);
-    ctx.fillStyle = '#6b7280';
-    ctx.font = '10px Arial';
-    ctx.fillText('QR Code', 320, 125);
-    
-    // Download
-    const link = document.createElement('a');
-    link.download = `carteirinha-${userProfile?.name?.replace(/\s+/g, '-').toLowerCase()}.png`;
-    link.href = canvas.toDataURL();
-    link.click();
+
+    // Logo area (substitua o texto pelo logo)
+    const logoImg = new window.Image();
+    logoImg.src = logoHemolink;
+    logoImg.onload = () => {
+      ctx.drawImage(logoImg, 20, 15, 140, 24); // ajuste tamanho/posição conforme necessário
+
+      // User info
+      ctx.fillStyle = '#1f2937';
+      ctx.font = 'bold 18px Arial';
+      ctx.fillText(userProfile?.name || 'Nome do Doador', 20, 90);
+
+      ctx.font = '14px Arial';
+      ctx.fillText(`Tipo Sanguíneo: ${bloodType}`, 20, 110);
+      ctx.fillText(`Total de Doações: ${totalDonations}`, 20, 130);
+      ctx.fillText(`Nível: ${donorLevel.level}`, 20, 150);
+
+      if (lastDonation) {
+        ctx.fillText(`Última Doação: ${new Date(lastDonation.date).toLocaleDateString('pt-BR')}`, 20, 170);
+      }
+
+      // QR Code placeholder
+      ctx.fillStyle = '#e5e7eb';
+      ctx.fillRect(300, 80, 80, 80);
+      ctx.fillStyle = '#6b7280';
+      ctx.font = '10px Arial';
+      ctx.fillText('QR Code', 320, 125);
+
+      // Download
+      const link = document.createElement('a');
+      link.download = `carteirinha-${userProfile?.name?.replace(/\s+/g, '-').toLowerCase()}.png`;
+      link.href = canvas.toDataURL();
+      link.click();
+    };
+    // Pare a execução aqui para aguardar o carregamento da imagem
+    return;
   };
 
   const handleShare = () => {
@@ -94,7 +99,12 @@ const DonorCard = ({ userProfile, donations = [] }) => {
               <Heart className="h-4 w-4 absolute -bottom-1 -right-1" />
             </div>
             <div>
-              <h2 className="text-xl font-bold">HEMOLINK</h2>
+              <img
+                src={logoHemolink}
+                alt="Hemolink"
+                className="h-8 w-auto"
+                style={{ maxWidth: 180 }}
+              />
               <p className="text-sm opacity-90">Carteirinha de Doador</p>
             </div>
           </div>
@@ -149,7 +159,7 @@ const DonorCard = ({ userProfile, donations = [] }) => {
                 {donorLevel.level}
               </span>
             </div>
-            
+
             {lastDonation && (
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Última Doação</span>
@@ -158,7 +168,7 @@ const DonorCard = ({ userProfile, donations = [] }) => {
                 </span>
               </div>
             )}
-            
+
             <div className="flex justify-between items-center">
               <span className="text-sm text-gray-600">Status</span>
               <span className="text-sm font-medium text-green-600">Ativo</span>
@@ -183,7 +193,7 @@ const DonorCard = ({ userProfile, donations = [] }) => {
             <Download className="h-4 w-4 mr-2" />
             Baixar
           </button>
-          
+
           <button
             onClick={handleShare}
             className="flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center"

@@ -2,20 +2,25 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
+import gotasBg from '../assets/Padronagens-27.png'; // ajuste o caminho se necessário
+import bloco1 from '../assets/bloco1.jpeg';
+import bloco2 from '../assets/bloco2.jpeg';
+import bloco3 from '../assets/bloco3.jpeg';
+import { Link } from 'react-router-dom';
 
 const demoImages = [
   {
-    src: '/demo-dashboard.png', // Substitua pelo caminho real da imagem
+    src: bloco1,
     alt: 'Dashboard do Hemocentro',
     caption: 'Dashboard de Gestão de Estoque em Tempo Real'
   },
   {
-    src: '/demo-campanha.png', // Substitua pelo caminho real da imagem
-    alt: 'Campanha de Doação',
-    caption: 'Gestão de Campanhas de Doação'
+    src: bloco2,
+    alt: 'Carteirinha Digital',
+    caption: 'Carteirinha Digital para Doadores'
   },
   {
-    src: '/demo-doadores.png', // Substitua pelo caminho real da imagem
+    src: bloco3,
     alt: 'Lista de Doadores',
     caption: 'Consulta de Doadores e Histórico de Doações'
   }
@@ -29,17 +34,25 @@ const fadeInUp = {
 
 const DemonstrationPage = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-primary-50 via-white to-medical-50">
+    <div className="min-h-screen flex flex-col relative">
+      <div className="fixed inset-0 -z-10" style={{ opacity: 0.04 }}>
+        <img
+          src={gotasBg}
+          alt="Fundo de gotas"
+          className="w-full h-full object-cover"
+          draggable={false}
+        />
+      </div>
       <Header />
 
       <main className="flex-1">
-        <section className="max-w-5xl mx-auto px-4 py-16">
+        <section className="max-w-5xl mx-auto px-4 py-16 bg-transparent">
           <motion.div {...fadeInUp} className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Demonstração do Hemolink
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Veja como a plataforma Hemolink pode transformar a gestão do seu hemocentro e facilitar a conexão com doadores. Explore abaixo algumas telas e funcionalidades principais do sistema.
+              Veja como a plataforma Hemolink pode transformar a gestão do seu hemocentro e facilitar a conexão com doadores. Faça seu login para poder ter acesso a algumas telas e funcionalidades principais do sistema.
             </p>
           </motion.div>
 
@@ -69,12 +82,12 @@ const DemonstrationPage = () => {
             <p className="text-gray-700 mb-6">
               Entre em contato conosco para uma demonstração personalizada e descubra todos os benefícios do Hemolink para sua equipe e para os doadores.
             </p>
-            <a
-              href="#contato"
+            <Link
+              to="/#contato"
               className="inline-block bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-700 transition-colors"
             >
-              Solicitar Demonstração
-            </a>
+              Entrar em Contato
+            </Link>
           </motion.div>
         </section>
       </main>

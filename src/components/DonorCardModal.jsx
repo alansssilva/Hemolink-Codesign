@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { X, Download, Share2, QrCode, Award, Trophy, Star } from 'lucide-react';
 import DonorCard from './DonorCard';
 
+
 const DonorCardModal = ({ isOpen, onClose, userProfile, donations = [] }) => {
   if (!isOpen) return null;
 

@@ -8,11 +8,13 @@ import ProfileModal from '../components/ProfileModal';
 import DonationHistoryModal from '../components/DonationHistoryModal';
 import ScheduleModal from '../components/ScheduleModal';
 import DonorCardModal from '../components/DonorCardModal';
+import logoHemolink from '../assets/Assinatura Visual.png';
+import gotasBg from '../assets/Padronagens-27.png'; // ajuste o caminho se necessário
 
 const DonorDashboard = () => {
   const { user, userProfile, signOut, updateProfile, stockLevels } = useAuth();
   const { addNotification } = useNotification();
-  
+
   const [hemocenters, setHemocenters] = useState([]);
   const [applications, setApplications] = useState([]);
   const [campaigns, setCampaigns] = useState([]);
@@ -21,7 +23,7 @@ const DonorDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedBloodType, setSelectedBloodType] = useState('');
-  
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
@@ -36,11 +38,7 @@ const DonorDashboard = () => {
 
   const fetchData = async () => {
     try {
-      // Simular delay de carregamento
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Dados mock para demonstração
-
       const mockHemocenters = [
         {
           id: '1',
@@ -55,7 +53,6 @@ const DonorDashboard = () => {
           is_active: true
         }
       ];
-
       const mockApplications = [
         {
           id: '1',
@@ -66,7 +63,6 @@ const DonorDashboard = () => {
           hemocenters: { name: 'Hemocentro Vida Plena' }
         }
       ];
-
       const mockCampaigns = [
         {
           id: '1',
@@ -78,7 +74,6 @@ const DonorDashboard = () => {
           hemocenters: { name: 'Hemocentro Vida Plena', address: 'Rua da Esperança, 123' }
         }
       ];
-
       const mockDonations = [
         {
           id: '1',
@@ -103,7 +98,6 @@ const DonorDashboard = () => {
           notes: 'Primeira doação'
         }
       ];
-
       const mockScheduledDonations = [
         {
           id: '1',
@@ -115,7 +109,6 @@ const DonorDashboard = () => {
           notes: 'Agendamento confirmado'
         }
       ];
-
       setHemocenters(mockHemocenters);
       setApplications(mockApplications);
       setCampaigns(mockCampaigns);
@@ -127,7 +120,7 @@ const DonorDashboard = () => {
       setLoading(false);
     }
   };
-  
+
   const openApplicationModal = (hemocenter, campaign = null) => {
     setApplicationData({ hemocenter, campaign });
     setIsModalOpen(true);
@@ -135,15 +128,12 @@ const DonorDashboard = () => {
 
   const handleScheduleDonation = async (scheduleData) => {
     try {
-      // Simular delay de agendamento
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
       const newScheduledDonation = {
         id: Date.now().toString(),
         ...scheduleData,
         status: 'scheduled'
       };
-      
       setScheduledDonations(prev => [newScheduledDonation, ...prev]);
       addNotification('Doação agendada com sucesso!', 'success');
     } catch (error) {
@@ -164,10 +154,7 @@ const DonorDashboard = () => {
     if (!applicationData) return;
     setIsSubmitting(true);
     try {
-      // Simular delay de envio
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Adicionar nova candidatura localmente
       const newApplication = {
         id: Date.now().toString(),
         donor_user_id: user.id,
@@ -176,7 +163,6 @@ const DonorDashboard = () => {
         status: 'pending',
         hemocenters: { name: applicationData.hemocenter.name }
       };
-      
       setApplications(prev => [newApplication, ...prev]);
       addNotification('Candidatura enviada com sucesso!', 'success');
       setIsModalOpen(false);
@@ -207,8 +193,8 @@ const DonorDashboard = () => {
     }
   };
 
-  const filteredHemocenters = hemocenters.filter(h => 
-    h.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredHemocenters = hemocenters.filter(hemocenter =>
+    hemocenter.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (loading) {
@@ -220,7 +206,15 @@ const DonorDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen flex flex-col relative">
+      <div className="fixed inset-0 -z-10" style={{ opacity: 0.04 }}>
+        <img
+          src={gotasBg}
+          alt="Fundo de gotas"
+          className="w-full h-full object-cover"
+          draggable={false}
+        />
+      </div>
       <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -230,12 +224,16 @@ const DonorDashboard = () => {
                   <Droplets className="h-8 w-8 text-primary-600" />
                   <Heart className="h-4 w-4 text-primary-500 absolute -bottom-1 -right-1" />
                 </div>
-                <span className="text-xl font-bold text-gray-900">Hemolink</span>
+                <img
+                  src={logoHemolink}
+                  alt="Hemolink"
+                  className="h-8 w-auto"
+                  style={{ maxWidth: 120 }}
+                />
               </div>
               <span className="text-gray-400">|</span>
               <span className="text-gray-600">Dashboard do Doador</span>
             </div>
-            
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => setIsDonorCardModalOpen(true)}
@@ -245,7 +243,6 @@ const DonorDashboard = () => {
                 <Award className="h-5 w-5" />
                 <span className="text-sm hidden md:inline">Carteirinha</span>
               </button>
-              
               <button
                 onClick={() => setIsHistoryModalOpen(true)}
                 className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors"
@@ -254,7 +251,6 @@ const DonorDashboard = () => {
                 <BarChart3 className="h-5 w-5" />
                 <span className="text-sm hidden md:inline">Histórico</span>
               </button>
-              
               <button
                 onClick={() => setIsProfileModalOpen(true)}
                 className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors"
@@ -263,7 +259,6 @@ const DonorDashboard = () => {
                 <User className="h-5 w-5" />
                 <span className="text-sm hidden md:inline">{userProfile?.name}</span>
               </button>
-              
               <button
                 onClick={signOut}
                 className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition-colors"
@@ -276,9 +271,8 @@ const DonorDashboard = () => {
           </div>
         </div>
       </header>
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+        <div className="bg-white bg-opacity-80 rounded-lg shadow-sm p-6 mb-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Bem-vindo, {userProfile?.name}!
           </h1>
@@ -286,10 +280,8 @@ const DonorDashboard = () => {
             Seu tipo sanguíneo: <span className="font-semibold text-primary-600">{userProfile?.donor_profiles?.[0]?.blood_type || 'Não informado'}</span>
           </p>
         </div>
-
-        {/* Estatísticas */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <div className="bg-white bg-opacity-80 rounded-lg shadow-sm p-6">
             <div className="flex items-center">
               <div className="p-2 bg-primary-100 rounded-lg">
                 <Droplets className="h-6 w-6 text-primary-600" />
@@ -300,8 +292,7 @@ const DonorDashboard = () => {
               </div>
             </div>
           </div>
-          
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <div className="bg-white bg-opacity-80 rounded-lg shadow-sm p-6">
             <div className="flex items-center">
               <div className="p-2 bg-green-100 rounded-lg">
                 <Calendar className="h-6 w-6 text-green-600" />
@@ -312,8 +303,7 @@ const DonorDashboard = () => {
               </div>
             </div>
           </div>
-          
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <div className="bg-white bg-opacity-80 rounded-lg shadow-sm p-6">
             <div className="flex items-center">
               <div className="p-2 bg-yellow-100 rounded-lg">
                 <Clock className="h-6 w-6 text-yellow-600" />
@@ -324,8 +314,7 @@ const DonorDashboard = () => {
               </div>
             </div>
           </div>
-          
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <div className="bg-white bg-opacity-80 rounded-lg shadow-sm p-6">
             <div className="flex items-center">
               <div className="p-2 bg-purple-100 rounded-lg">
                 <Award className="h-6 w-6 text-purple-600" />
@@ -333,8 +322,8 @@ const DonorDashboard = () => {
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Última Doação</p>
                 <p className="text-sm font-bold text-gray-900">
-                  {donations.length > 0 ? 
-                    new Date(donations[0].date).toLocaleDateString('pt-BR') : 
+                  {donations.length > 0 ?
+                    new Date(donations[0].date).toLocaleDateString('pt-BR') :
                     'Nunca'
                   }
                 </p>
@@ -342,8 +331,6 @@ const DonorDashboard = () => {
             </div>
           </div>
         </div>
-
-        {/* Seção da Carteirinha Digital */}
         {donations.length > 0 && (
           <div className="bg-gradient-to-r from-primary-50 to-red-50 rounded-lg shadow-sm p-6 mb-8 border border-primary-200">
             <div className="flex items-center justify-between">
@@ -353,7 +340,7 @@ const DonorDashboard = () => {
                   Sua Carteirinha Digital
                 </h2>
                 <p className="text-gray-600 mb-4">
-                  Parabéns! Você já realizou {donations.length} doação(ões). 
+                  Parabéns! Você já realizou {donations.length} doação(ões).
                   Acesse sua carteirinha digital e compartilhe sua conquista!
                 </p>
                 <button
@@ -372,8 +359,7 @@ const DonorDashboard = () => {
             </div>
           </div>
         )}
-
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+        <div className="bg-white bg-opacity-80 rounded-lg shadow-sm p-6 mb-8">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -392,15 +378,14 @@ const DonorDashboard = () => {
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
               >
                 <option value="">Todos os tipos</option>
-                {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(bt => <option key={bt} value={bt}>{bt}</option>)}
+                {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(bloodType => <option key={bloodType} value={bloodType}>{bloodType}</option>)}
               </select>
             </div>
           </div>
         </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-white rounded-lg shadow-sm">
+            <div className="bg-white bg-opacity-80 rounded-lg shadow-sm">
               <div className="p-6 border-b border-gray-200">
                 <h2 className="text-lg font-semibold text-gray-900">Estoque de Sangue</h2>
               </div>
@@ -434,7 +419,6 @@ const DonorDashboard = () => {
                         if (selectedBloodType && bloodType !== selectedBloodType) return null;
                         const level = stock?.units || 0;
                         const status = stock?.status || 'unknown';
-                        
                         return (
                           <div key={bloodType} className="text-center">
                             <Droplets className={`h-6 w-6 mx-auto mb-2 ${level < 30 ? 'text-red-500' : level < 60 ? 'text-yellow-500' : 'text-green-500'}`} />
@@ -452,10 +436,8 @@ const DonorDashboard = () => {
               </div>
             </div>
           </div>
-
           <div className="space-y-6">
-            {/* Agendamentos Próximos */}
-            <div className="bg-white rounded-lg shadow-sm">
+            <div className="bg-white bg-opacity-80 rounded-lg shadow-sm">
               <div className="p-6 border-b border-gray-200 flex justify-between items-center">
                 <h2 className="text-lg font-semibold text-gray-900">Agendamentos Próximos</h2>
                 <button
@@ -498,8 +480,7 @@ const DonorDashboard = () => {
                 )}
               </div>
             </div>
-
-            <div className="bg-white rounded-lg shadow-sm">
+            <div className="bg-white bg-opacity-80 rounded-lg shadow-sm">
               <div className="p-6 border-b border-gray-200">
                 <h2 className="text-lg font-semibold text-gray-900">Campanhas Ativas</h2>
               </div>
@@ -521,8 +502,7 @@ const DonorDashboard = () => {
                 ))}
               </div>
             </div>
-
-            <div className="bg-white rounded-lg shadow-sm">
+            <div className="bg-white bg-opacity-80 rounded-lg shadow-sm">
               <div className="p-6 border-b border-gray-200">
                 <h2 className="text-lg font-semibold text-gray-900">Minhas Candidaturas</h2>
               </div>
@@ -543,7 +523,6 @@ const DonorDashboard = () => {
           </div>
         </div>
       </main>
-
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirmar Candidatura">
         {applicationData && (
           <div>
@@ -577,31 +556,23 @@ const DonorDashboard = () => {
           </div>
         )}
       </Modal>
-
-      {/* Profile Modal */}
       <ProfileModal
         isOpen={isProfileModalOpen}
         onClose={() => setIsProfileModalOpen(false)}
         userProfile={userProfile}
         onUpdate={handleUpdateProfile}
       />
-
-      {/* Donation History Modal */}
       <DonationHistoryModal
         isOpen={isHistoryModalOpen}
         onClose={() => setIsHistoryModalOpen(false)}
         donations={donations}
       />
-
-      {/* Schedule Modal */}
       <ScheduleModal
         isOpen={isScheduleModalOpen}
         onClose={() => setIsScheduleModalOpen(false)}
-        hemocenter={hemocenters[0]} // Usar primeiro hemocentro como padrão
+        hemocenter={hemocenters[0]}
         onSchedule={handleScheduleDonation}
       />
-
-      {/* Donor Card Modal */}
       <DonorCardModal
         isOpen={isDonorCardModalOpen}
         onClose={() => setIsDonorCardModalOpen(false)}

@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { User, Stethoscope, Droplets, Heart, ArrowLeft } from 'lucide-react';
+import logoHemolink from '../assets/Logo vermelha.png';
+import gotasBg from '../assets/Padronagens-28.png'; // ajuste o caminho se necessário
 
 const LoginTypePage = () => {
   const cardVariants = {
@@ -10,12 +12,20 @@ const LoginTypePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-medical-50 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 relative">
+      <div className="fixed inset-0 -z-10" style={{ opacity: 0.04 }}>
+        <img
+          src={gotasBg}
+          alt="Fundo de gotas"
+          className="w-full h-full object-cover"
+          draggable={false}
+        />
+      </div>
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md text-center relative"
+        className="bg-white bg-opacity-80 rounded-2xl shadow-xl p-8 w-full max-w-md text-center relative"
       >
         <Link to="/" className="absolute top-6 left-6 text-gray-400 hover:text-gray-600 transition-colors">
           <ArrowLeft className="h-6 w-6" />
@@ -26,7 +36,12 @@ const LoginTypePage = () => {
             <Droplets className="h-10 w-10 text-primary-600" />
             <Heart className="h-5 w-5 text-primary-500 absolute -bottom-1 -right-1" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">Hemolink</h1>
+          <img
+            src={logoHemolink}
+            alt="Hemolink"
+            className="h-10 w-auto"
+            style={{ maxWidth: 180 }}
+          />
         </div>
 
         <p className="text-gray-600 mb-8 text-lg">Selecione seu tipo de login</p>
@@ -68,4 +83,3 @@ const LoginTypePage = () => {
 };
 
 export default LoginTypePage;
-
