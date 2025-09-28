@@ -15,17 +15,12 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <div className="relative">
-              <Droplets className="h-8 w-8 text-primary-600 group-hover:text-primary-700 transition-colors" />
-              <Heart className="h-4 w-4 text-primary-500 absolute -bottom-1 -right-1 group-hover:text-primary-600 transition-colors" />
-            </div>
             <img
               src={logoHemolink}
               alt="Hemolink"
-              className="h-8 w-auto"
-              style={{ maxWidth: 120 }}
+              className="h-10 w-auto" // diminua de h-16 para h-10
+              style={{ maxWidth: 140 }} // diminua o maxWidth conforme desejar
             />
-            <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded-full">SaaS</span>
           </Link>
 
           {/* Desktop Navigation */}
