@@ -84,10 +84,6 @@ const LoginPage = () => {
           </Link>
 
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="relative">
-              <Droplets className="h-8 w-8 text-primary-600" />
-              <Heart className="h-4 w-4 text-primary-500 absolute -bottom-1 -right-1" />
-            </div>
             <img
               src={logoHemolink}
               alt="Hemolink"
