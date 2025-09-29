@@ -32,10 +32,6 @@ const LoginTypePage = () => {
         </Link>
 
         <div className="flex items-center justify-center space-x-2 mb-6">
-          <div className="relative">
-            <Droplets className="h-10 w-10 text-primary-600" />
-            <Heart className="h-5 w-5 text-primary-500 absolute -bottom-1 -right-1" />
-          </div>
           <img
             src={logoHemolink}
             alt="Hemolink"
