@@ -18,29 +18,6 @@ export const AuthProvider = ({ children }) => {
   const [stockLevels, setStockLevels] = useState([]);
   const [donations, setDonations] = useState([]);
 
-  // Dados de usuários de exemplo
-  const mockUsers = [
-    {
-      id: '1',
-      email: 'doador@teste.com',
-      password: '123456',
-      name: 'João Silva',
-      role: 'donor',
-      blood_type: 'O+',
-      phone: '(11) 99999-9999',
-      postal_code: '01234-567'
-    },
-    {
-      id: '2',
-      email: 'profissional@teste.com',
-      password: '123456',
-      name: 'Maria Santos',
-      role: 'professional',
-      position: 'Enfermeira',
-      phone: '(11) 88888-8888'
-    }
-  ];
-
   // Dados iniciais de doadores
   const initialDonors = [
     {
@@ -96,12 +73,12 @@ export const AuthProvider = ({ children }) => {
     const savedDonors = localStorage.getItem('hemolink_donors');
     const savedStock = localStorage.getItem('hemolink_stock');
     const savedDonations = localStorage.getItem('hemolink_donations');
-    
+
     if (savedUser && savedProfile) {
       setUser(JSON.parse(savedUser));
       setUserProfile(JSON.parse(savedProfile));
     }
-    
+
     // Carregar dados iniciais se não existirem
     if (savedDonors) {
       setDonors(JSON.parse(savedDonors));
@@ -109,31 +86,31 @@ export const AuthProvider = ({ children }) => {
       setDonors(initialDonors);
       localStorage.setItem('hemolink_donors', JSON.stringify(initialDonors));
     }
-    
+
     if (savedStock) {
       setStockLevels(JSON.parse(savedStock));
     } else {
       setStockLevels(initialStockLevels);
       localStorage.setItem('hemolink_stock', JSON.stringify(initialStockLevels));
     }
-    
+
     if (savedDonations) {
       setDonations(JSON.parse(savedDonations));
     } else {
       setDonations([]);
       localStorage.setItem('hemolink_donations', JSON.stringify([]));
     }
-    
+
     setLoading(false);
   }, []);
 
+  // LOGIN
   const signIn = async (email, password) => {
     try {
-      // Simular delay de rede
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const foundUser = mockUsers.find(u => u.email === email && u.password === password);
-      
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const users = JSON.parse(localStorage.getItem('hemolink_users')) || [];
+      const foundUser = users.find(u => u.email === email && u.password === password);
+
       if (!foundUser) {
         throw new Error('Email ou senha incorretos');
       }
@@ -167,8 +144,6 @@ export const AuthProvider = ({ children }) => {
 
       setUser(userData);
       setUserProfile(profileData);
-      
-      // Salvar no localStorage
       localStorage.setItem('hemolink_user', JSON.stringify(userData));
       localStorage.setItem('hemolink_profile', JSON.stringify(profileData));
 
@@ -178,18 +153,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // CADASTRO
   const signUp = async (userData) => {
     try {
-      // Simular delay de rede
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Verificar se email já existe
-      const existingUser = mockUsers.find(u => u.email === userData.email);
-      if (existingUser) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const users = JSON.parse(localStorage.getItem('hemolink_users')) || [];
+      if (users.find(u => u.email === userData.email)) {
         throw new Error('Email já cadastrado');
       }
-
-      // Criar novo usuário
       const newUser = {
         id: Date.now().toString(),
         email: userData.email,
@@ -200,9 +171,8 @@ export const AuthProvider = ({ children }) => {
         phone: userData.phone,
         postal_code: userData.location
       };
-
-      mockUsers.push(newUser);
-
+      users.push(newUser);
+      localStorage.setItem('hemolink_users', JSON.stringify(users));
       return { user: newUser };
     } catch (error) {
       throw error;
@@ -249,7 +219,7 @@ export const AuthProvider = ({ children }) => {
         ...donorData,
         registeredAt: new Date().toISOString()
       };
-      
+
       const updatedDonors = [...donors, newDonor];
       setDonors(updatedDonors);
       localStorage.setItem('hemolink_donors', JSON.stringify(updatedDonors));
@@ -263,13 +233,13 @@ export const AuthProvider = ({ children }) => {
   const updateStockLevel = async (bloodType, units) => {
     try {
       const status = units < 25 ? 'critical' : units < 50 ? 'low' : units < 80 ? 'stable' : 'high';
-      
-      const updatedStock = stockLevels.map(stock => 
-        stock.blood_type === bloodType 
+
+      const updatedStock = stockLevels.map(stock =>
+        stock.blood_type === bloodType
           ? { ...stock, units, status, last_updated: new Date().toISOString() }
           : stock
       );
-      
+
       setStockLevels(updatedStock);
       localStorage.setItem('hemolink_stock', JSON.stringify(updatedStock));
       return updatedStock;
@@ -287,27 +257,27 @@ export const AuthProvider = ({ children }) => {
         recordedAt: new Date().toISOString(),
         recordedBy: user?.id
       };
-      
+
       const updatedDonations = [...donations, newDonation];
       setDonations(updatedDonations);
       localStorage.setItem('hemolink_donations', JSON.stringify(updatedDonations));
-      
+
       // Atualizar estoque automaticamente
       const currentStock = stockLevels.find(s => s.blood_type === donationData.bloodType);
       if (currentStock) {
-        const newUnits = currentStock.units + 1; // Adicionar 1 unidade
+        const newUnits = currentStock.units + 1;
         await updateStockLevel(donationData.bloodType, newUnits);
       }
-      
+
       // Atualizar última doação do doador
-      const updatedDonors = donors.map(donor => 
-        donor.id === donationData.donorId 
+      const updatedDonors = donors.map(donor =>
+        donor.id === donationData.donorId
           ? { ...donor, lastDonationDate: donationData.date }
           : donor
       );
       setDonors(updatedDonors);
       localStorage.setItem('hemolink_donors', JSON.stringify(updatedDonors));
-      
+
       return newDonation;
     } catch (error) {
       throw error;
@@ -321,7 +291,7 @@ export const AuthProvider = ({ children }) => {
     const low = stockLevels.filter(s => s.status === 'low').length;
     const stable = stockLevels.filter(s => s.status === 'stable').length;
     const high = stockLevels.filter(s => s.status === 'high').length;
-    
+
     return { total, critical, low, stable, high };
   };
 
@@ -337,11 +307,9 @@ export const AuthProvider = ({ children }) => {
     isDonor: userProfile?.role === 'donor',
     isProfessional: userProfile?.role === 'professional',
     isAdmin: userProfile?.role === 'admin',
-    // Dados compartilhados
     donors,
     stockLevels,
     donations,
-    // Funções de gerenciamento
     registerDonor,
     updateStockLevel,
     recordDonation,
