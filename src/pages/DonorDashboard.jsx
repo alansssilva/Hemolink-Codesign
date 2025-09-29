@@ -220,10 +220,6 @@ const DonorDashboard = () => {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
-                <div className="relative">
-                  <Droplets className="h-8 w-8 text-primary-600" />
-                  <Heart className="h-4 w-4 text-primary-500 absolute -bottom-1 -right-1" />
-                </div>
                 <img
                   src={logoHemolink}
                   alt="Hemolink"
