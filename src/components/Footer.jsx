@@ -2,7 +2,7 @@ import { Droplets, Facebook, Heart, Instagram, Mail, MapPin, Phone, Twitter, X }
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logoFaculdade from '../assets/logo-camposcentro-horizontal-branco.png';
-import logoHemolink from '../assets/Logo branca.png';
+import logoHemolink from '../assets/Logo Branca.png';
 
 const termsText = `
 **Termos de Uso**
@@ -48,13 +48,12 @@ const Footer = () => {
               Plataforma completa para hemocentros e doadores.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
+              <a
+                href="https://www.instagram.com/hemolink_"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-primary-400 transition-colors"
+              >
                 <Instagram className="h-5 w-5" />
               </a>
             </div>
